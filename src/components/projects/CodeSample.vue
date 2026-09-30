@@ -3,7 +3,7 @@ import { computed, ref } from 'vue'
 import type { ProjectCode } from '../../content/types'
 import SocialIcon from '../icons/SocialIcon.vue'
 
-const props = defineProps<{ code: ProjectCode; githubUrl: string }>()
+const props = defineProps<{ code: ProjectCode; githubUrl?: string }>()
 
 const activeLangIndex = ref(0)
 
@@ -27,7 +27,7 @@ const activeHtml = computed(() => {
           @click="activeLangIndex = i"
         >{{ tab.label }}</button>
       </div>
-      <a class="github-btn" :href="githubUrl" target="_blank" rel="noopener noreferrer" title="GitHub">
+      <a v-if="githubUrl" class="github-btn" :href="githubUrl" target="_blank" rel="noopener noreferrer" title="GitHub">
         <SocialIcon id="github" /> GitHub
       </a>
     </div>

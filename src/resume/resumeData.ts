@@ -22,14 +22,15 @@ export interface PersonalProject {
 export interface ResumeEducationItem {
   institution: string
   degree: string
-  credential: string
+  credential?: string
   period: string
-  note: string
+  note?: string
 }
 
 export interface ResumeContent {
   name: string
   title: string
+  contacts: { label: string; url: string }[]
   experienceHeading: string
   personalProjectsHeading: string
   summary: string
@@ -49,9 +50,22 @@ export interface ResumeContent {
   courses: string[]
 }
 
+export interface ShortResumeContent {
+  summary: string
+  supportBullets: string[]
+  personalHighlights: { title: string; note: string }[]
+  personalOther: string
+  courses: string[]
+}
+
 const en: ResumeContent = {
   name: 'Elena Duka',
   title: 'Full Stack Developer',
+  contacts: [
+    { label: 'sadelenik.a@gmail.com', url: 'mailto:sadelenik.a@gmail.com' },
+    { label: 'github.com/Sakitsudzukeru', url: 'https://github.com/Sakitsudzukeru' },
+    { label: 'linkedin.com/in/elena-duka-212b803bb', url: 'https://www.linkedin.com/in/elena-duka-212b803bb/' },
+  ],
   experienceHeading: 'EXPERIENCE',
   personalProjectsHeading: 'PERSONAL PROJECTS',
   summary:
@@ -237,6 +251,11 @@ const en: ResumeContent = {
 const ru: ResumeContent = {
   name: 'Елена Дука',
   title: 'Full Stack Developer',
+  contacts: [
+    { label: 'sadelenik.a@gmail.com', url: 'mailto:sadelenik.a@gmail.com' },
+    { label: 'github.com/Sakitsudzukeru', url: 'https://github.com/Sakitsudzukeru' },
+    { label: 'linkedin.com/in/elena-duka-212b803bb', url: 'https://www.linkedin.com/in/elena-duka-212b803bb/' },
+  ],
   experienceHeading: 'ОПЫТ РАБОТЫ',
   personalProjectsHeading: 'ЛИЧНЫЕ ПРОЕКТЫ',
   summary:
@@ -257,7 +276,7 @@ const ru: ResumeContent = {
     { label: 'Тестирование и документация', value: 'Jest · Swagger/OpenAPI' },
     { label: 'Инструменты и AI', value: 'Git · разработка с AI-ассистентом (Claude Code) в личных проектах' },
   ],
-  openToRelocation: 'Открыта к переезду.',
+  openToRelocation: 'Открыта к релокации.',
   experience: {
     company: 'Мобильный оператор',
     role: 'Software Engineer (1 категория)',
@@ -421,3 +440,55 @@ const ru: ResumeContent = {
 }
 
 export const resumeByLocale: Record<Locale, ResumeContent> = { ru, en }
+
+const shortEn: ShortResumeContent = {
+  summary: en.summary,
+  supportBullets: [
+    'Feature development and legacy maintenance (PHP/Laravel, C#, Vue.js), refactoring and migration.',
+    'Production bug and vulnerability fixes; Jest unit tests to prevent regressions.',
+  ],
+  personalHighlights: [
+    {
+      title: 'LangLib — language learning platform',
+      note: 'Full-stack platform for learning languages: payments, idempotency, word-analog search. Next.js, NestJS, MongoDB, Redis, RabbitMQ.',
+    },
+    {
+      title: 'Visual Novel',
+      note: 'Game project with a local LLM (Qwen2.5-7B via llama-server) generating unique character dialogue.',
+    },
+    {
+      title: 'Mobile Photo Application',
+      note: 'Flutter client with a photo editor, NestJS backend, Python services for image processing and NSFW moderation.',
+    },
+  ],
+  personalOther:
+    'Also built language-quiz flashcards (React Native), Telegram bots (dating, job search), a VK game chat bot, and two thesis projects — a corporate messenger and a jewelry online store.',
+  courses: ['Infrastructure Solutions for Programmers — C-19154, 2025'],
+}
+
+const shortRu: ShortResumeContent = {
+  summary: ru.summary,
+  supportBullets: [
+    'Разработка нового функционала и поддержка легаси (PHP/Laravel, C#, Vue.js), рефакторинг и миграция.',
+    'Исправление продакшн-багов и уязвимостей; Jest-тесты для предотвращения регрессий.',
+  ],
+  personalHighlights: [
+    {
+      title: 'LangLib — языковая платформа',
+      note: 'Full-stack платформа для изучения языков: платежи, идемпотентность, поиск аналогов слов. Next.js, NestJS, MongoDB, Redis, RabbitMQ.',
+    },
+    {
+      title: 'Визуальная новелла',
+      note: 'Игровой проект с локальной LLM (Qwen2.5-7B через llama-server) для генерации уникальных диалогов персонажей.',
+    },
+    {
+      title: 'Мобильное приложение для работы с картинками',
+      note: 'Flutter-клиент с фоторедактором, NestJS backend, Python-сервисы обработки изображений и NSFW-модерации.',
+    },
+  ],
+  personalOther:
+    'Также делала квиз-карточки для изучения языка (React Native), Telegram-ботов (знакомства, поиск работы), игрового чат-бота для ВКонтакте и два дипломных проекта — корпоративный мессенджер и интернет-магазин украшений.',
+  courses: ['Infrastructure Solutions for Programmers — C-19154, 2025'],
+}
+
+export const shortResumeByLocale: Record<Locale, ShortResumeContent> = { ru: shortRu, en: shortEn }

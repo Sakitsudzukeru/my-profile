@@ -6,6 +6,7 @@ export const logo = {
 };
 
 export const cvButtonLabel = "CV.PDF ↓";
+export const cvShortButtonLabel = "CV short ↓";
 
 export const socialLinks: SocialLink[] = [
   { id: "github", title: "GitHub", href: "https://github.com/Sakitsudzukeru" },

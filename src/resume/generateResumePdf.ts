@@ -1,6 +1,6 @@
 import { jsPDF } from 'jspdf'
 import type { Locale } from '../content/types'
-import { resumeByLocale } from './resumeData'
+import { resumeByLocale, shortResumeByLocale } from './resumeData'
 import ptSansRegularUrl from './fonts/PTSans-Regular.ttf?url'
 import ptSansBoldUrl from './fonts/PTSans-Bold.ttf?url'
 
@@ -53,9 +53,7 @@ async function loadFontBase64(url: string): Promise<string> {
   return arrayBufferToBase64(buffer)
 }
 
-export async function downloadResumePdf(locale: Locale) {
-  const resume = resumeByLocale[locale]
-
+async function createPdfBuilder() {
   const [catDataUrl, regularBase64, boldBase64] = await Promise.all([
     loadCatDataUrl(),
     loadFontBase64(ptSansRegularUrl),
@@ -74,7 +72,6 @@ export async function downloadResumePdf(locale: Locale) {
 
   function drawChrome() {
     doc.addImage(catDataUrl, 'PNG', MARGIN, 20, 20, 15.6)
-
     doc.addImage(catDataUrl, 'PNG', PAGE_WIDTH - MARGIN - 20, PAGE_HEIGHT - 36, 20, 15.6)
     doc.setFont(FONT, 'normal')
     doc.setFontSize(8)
@@ -94,7 +91,8 @@ export async function downloadResumePdf(locale: Locale) {
   }
 
   function heading(text: string) {
-    ensureSpace(26)
+    y += 10
+    ensureSpace(24)
     doc.setFont(FONT, 'bold')
     doc.setFontSize(13)
     doc.setTextColor(...WINE)
@@ -159,103 +157,172 @@ export async function downloadResumePdf(locale: Locale) {
     return h
   }
 
-  doc.setFont(FONT, 'bold')
-  doc.setFontSize(20)
-  doc.setTextColor(...INK)
-  doc.text(resume.name, MARGIN, y)
-  y += 22
-  doc.setFont(FONT, 'normal')
-  doc.setFontSize(11)
-  doc.setTextColor(...WINE)
-  doc.text(resume.title, MARGIN, y)
-  y += 20
-
-  paragraph(resume.summary)
-  y += 6
-
-  for (const group of resume.skillGroups) {
-    ensureSpace(14)
+  function nameHeader(name: string, title: string, contacts: { label: string; url: string }[]) {
     doc.setFont(FONT, 'bold')
-    doc.setFontSize(9.5)
+    doc.setFontSize(20)
     doc.setTextColor(...INK)
-    const labelText = `${group.label}: `
-    doc.text(labelText, MARGIN, y)
-    const labelWidth = doc.getTextWidth(labelText)
+    doc.text(name, MARGIN, y)
+    y += 22
     doc.setFont(FONT, 'normal')
-    const lines = doc.splitTextToSize(group.value, CONTENT_WIDTH - labelWidth) as string[]
-    doc.text(lines[0], MARGIN + labelWidth, y)
-    y += 12
-    for (let i = 1; i < lines.length; i++) {
-      ensureSpace(12)
-      doc.text(lines[i], MARGIN, y)
-      y += 12
-    }
-  }
-  y += 4
-  paragraph(resume.openToRelocation, { size: 9, color: DIM })
-  y += 10
-
-  heading(resume.experienceHeading)
-  subheading(resume.experience.company)
-  doc.setFont(FONT, 'bold')
-  doc.setFontSize(10.5)
-  doc.setTextColor(...INK)
-  doc.text(resume.experience.role, MARGIN, y)
-  const roleWidth = doc.getTextWidth(resume.experience.role)
-  doc.setFont(FONT, 'normal')
-  doc.setFontSize(9)
-  doc.setTextColor(...DIM)
-  doc.text(resume.experience.period, MARGIN + roleWidth + 10, y)
-  y += 13
-  paragraph(resume.experience.techStack, { size: 8.5, color: DIM })
-  y += 6
-
-  for (const proj of resume.experience.projects) {
-    ensureSpace(projectBlockHeight(proj))
-    subheading(proj.title)
-    if (proj.summary) paragraph(proj.summary)
-    bullets(proj.bullets)
+    doc.setFontSize(11)
+    doc.setTextColor(...WINE)
+    doc.text(title, MARGIN, y)
+    y += 17
+    doc.setFontSize(9)
+    doc.setTextColor(...WINE)
+    let x = MARGIN
+    const sep = '   ·   '
+    contacts.forEach((c, i) => {
+      doc.textWithLink(c.label, x, y, { url: c.url })
+      x += doc.getTextWidth(c.label)
+      if (i < contacts.length - 1) {
+        doc.setTextColor(...DIM)
+        doc.text(sep, x, y)
+        x += doc.getTextWidth(sep)
+        doc.setTextColor(...WINE)
+      }
+    })
+    y += 18
   }
 
-  y += 6
-  heading(resume.educationHeading)
-  for (const edu of resume.education) {
-    const eduHeight =
-      16 +
-      countLines(edu.degree, CONTENT_WIDTH, 9.5) * 13 +
-      countLines(edu.credential, CONTENT_WIDTH, 9) * 13 +
-      countLines(edu.note, CONTENT_WIDTH, 8.5) * 13
-    ensureSpace(eduHeight)
+  function roleLine(role: string, period: string) {
+    doc.setFont(FONT, 'bold')
+    doc.setFontSize(10.5)
+    doc.setTextColor(...INK)
+    doc.text(role, MARGIN, y)
+    const roleWidth = doc.getTextWidth(role)
+    doc.setFont(FONT, 'normal')
+    doc.setFontSize(9)
+    doc.setTextColor(...DIM)
+    doc.text(period, MARGIN + roleWidth + 10, y)
+    y += 13
+  }
+
+  function educationBlock(edu: { institution: string; degree: string; credential?: string; period: string; note?: string }) {
+    let h = 16 + countLines(edu.degree, CONTENT_WIDTH, 9.5) * 13
+    if (edu.credential) h += countLines(edu.credential, CONTENT_WIDTH, 9) * 13
+    if (edu.note) h += countLines(edu.note, CONTENT_WIDTH, 8.5) * 13
+    ensureSpace(h)
     subheading(edu.institution, edu.period)
     paragraph(edu.degree, { size: 9.5 })
-    paragraph(edu.credential, { size: 9, color: DIM })
-    paragraph(edu.note, { size: 8.5, color: DIM })
-    y += 6
+    if (edu.credential) paragraph(edu.credential, { size: 9, color: DIM })
+    if (edu.note) paragraph(edu.note, { size: 8.5, color: DIM })
   }
-  if (resume.courses.length) {
-    let coursesHeight = 13
-    for (const course of resume.courses) coursesHeight += countLines(course, CONTENT_WIDTH - 16, 9.5) * 13
-    ensureSpace(coursesHeight)
+
+  function labeledBullets(label: string, items: string[]) {
+    if (!items.length) return
+    let h = 13
+    for (const item of items) h += countLines(item, CONTENT_WIDTH - 16, 9.5) * 13
+    ensureSpace(h)
     doc.setFont(FONT, 'bold')
     doc.setFontSize(9)
     doc.setTextColor(...INK)
-    doc.text(resume.coursesLabel, MARGIN, y)
+    doc.text(label, MARGIN, y)
     y += 13
-    bullets(resume.courses)
+    bullets(items)
   }
 
-  y += 6
-  heading(resume.personalProjectsHeading)
+  function save(fileName: string) {
+    drawChrome()
+    doc.save(fileName)
+  }
+
+  return {
+    heading,
+    subheading,
+    paragraph,
+    bullets,
+    countLines,
+    projectBlockHeight,
+    ensureSpace,
+    nameHeader,
+    roleLine,
+    educationBlock,
+    labeledBullets,
+    save,
+  }
+}
+
+export async function downloadResumePdf(locale: Locale) {
+  const resume = resumeByLocale[locale]
+  const b = await createPdfBuilder()
+
+  b.nameHeader(resume.name, resume.title, resume.contacts)
+  b.paragraph(resume.summary)
+
+  for (const group of resume.skillGroups) {
+    b.ensureSpace(14)
+    b.paragraph(`${group.label}: ${group.value}`, { size: 9.5 })
+  }
+  b.paragraph(resume.openToRelocation, { size: 9, color: DIM })
+
+  b.heading(resume.experienceHeading)
+  b.subheading(resume.experience.company)
+  b.roleLine(resume.experience.role, resume.experience.period)
+  b.paragraph(resume.experience.techStack, { size: 8.5, color: DIM })
+
+  for (const proj of resume.experience.projects) {
+    b.ensureSpace(b.projectBlockHeight(proj))
+    b.subheading(proj.title)
+    if (proj.summary) b.paragraph(proj.summary)
+    b.bullets(proj.bullets)
+  }
+
+  b.heading(resume.educationHeading)
+  for (const edu of resume.education) b.educationBlock(edu)
+  b.labeledBullets(resume.coursesLabel, resume.courses)
+
+  b.heading(resume.personalProjectsHeading)
   for (const proj of resume.personalProjects) {
-    ensureSpace(projectBlockHeight(proj))
-    subheading(proj.title, proj.status)
-    if (proj.summary) paragraph(proj.summary)
-    bullets(proj.bullets)
-    paragraph(proj.techStack, { size: 8.5, color: DIM })
-    y += 6
+    b.ensureSpace(b.projectBlockHeight(proj))
+    b.subheading(proj.title, proj.status)
+    if (proj.summary) b.paragraph(proj.summary)
+    b.bullets(proj.bullets)
+    b.paragraph(proj.techStack, { size: 8.5, color: DIM })
   }
 
-  drawChrome()
   const fileName = resume.name.replace(/\s+/g, '_')
-  doc.save(locale === 'ru' ? `${fileName}_резюме.pdf` : `${fileName}_CV.pdf`)
+  b.save(locale === 'ru' ? `${fileName}_резюме.pdf` : `${fileName}_CV.pdf`)
+}
+
+export async function downloadShortResumePdf(locale: Locale) {
+  const full = resumeByLocale[locale]
+  const short = shortResumeByLocale[locale]
+  const b = await createPdfBuilder()
+
+  b.nameHeader(full.name, full.title, full.contacts)
+  b.paragraph(short.summary)
+
+  for (const group of full.skillGroups) {
+    b.ensureSpace(14)
+    b.paragraph(`${group.label}: ${group.value}`, { size: 9.5 })
+  }
+  b.paragraph(full.openToRelocation, { size: 9, color: DIM })
+
+  b.heading(full.experienceHeading)
+  b.subheading(full.experience.company)
+  b.roleLine(full.experience.role, full.experience.period)
+
+  for (const proj of full.experience.projects) {
+    const bullets = proj.title === 'Corporate Systems Support' || proj.title === 'Поддержка корпоративных систем' ? short.supportBullets : proj.bullets
+    b.ensureSpace(b.projectBlockHeight({ ...proj, bullets }))
+    b.subheading(proj.title)
+    if (proj.summary) b.paragraph(proj.summary)
+    b.bullets(bullets)
+  }
+
+  b.heading(full.educationHeading)
+  for (const edu of full.education) b.educationBlock({ institution: edu.institution, degree: edu.degree, period: edu.period })
+  b.labeledBullets(full.coursesLabel, short.courses)
+
+  b.heading(full.personalProjectsHeading)
+  for (const proj of short.personalHighlights) {
+    b.ensureSpace(16 + b.countLines(proj.note, CONTENT_WIDTH, 9) * 13)
+    b.subheading(proj.title)
+    b.paragraph(proj.note, { size: 9, color: DIM })
+  }
+  b.paragraph(short.personalOther, { color: DIM })
+
+  const fileName = full.name.replace(/\s+/g, '_')
+  b.save(locale === 'ru' ? `${fileName}_резюме_кратко.pdf` : `${fileName}_CV_short.pdf`)
 }

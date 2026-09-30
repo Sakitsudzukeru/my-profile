@@ -19,6 +19,7 @@ export function buildContent(locale: Locale): SiteContent {
     socialLinks: shared.socialLinks,
     logo: shared.logo,
     cvButtonLabel: shared.cvButtonLabel,
+    cvShortButtonLabel: shared.cvShortButtonLabel,
     hero: {
       eyebrow: dict.hero.eyebrow,
       titleWhite: dict.hero.titleWhite,

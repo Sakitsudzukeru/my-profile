@@ -3,7 +3,7 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useContent } from '../content/useContent'
 import SocialIcon from './icons/SocialIcon.vue'
 import LangSwitch from './LangSwitch.vue'
-import { downloadResumePdf } from '../resume/generateResumePdf'
+import { downloadResumePdf, downloadShortResumePdf } from '../resume/generateResumePdf'
 
 const { content, locale } = useContent()
 
@@ -56,6 +56,7 @@ onBeforeUnmount(() => observer?.disconnect())
       <a v-for="social in content.socialLinks" :key="social.id" class="icon-btn" :href="social.href" :title="social.title">
         <SocialIcon :id="social.id" />
       </a>
+      <a class="cv-btn ghost" href="#" @click.prevent="downloadShortResumePdf(locale)">{{ content.cvShortButtonLabel }}</a>
       <a class="cv-btn" href="#" @click.prevent="downloadResumePdf(locale)">{{ content.cvButtonLabel }}</a>
     </div>
   </nav>
@@ -94,6 +95,10 @@ nav {
   background: linear-gradient(180deg, var(--rose-glow), var(--rose)); color: #fff5f6;
   padding: 0.5rem 0.9rem; border-radius: 8px; text-decoration: none; display: flex; align-items: center; gap: 0.35rem;
 }
+.cv-btn.ghost {
+  background: var(--glass-fill); color: var(--ink-soft); border: 1px solid var(--glass-line);
+}
+.cv-btn.ghost:hover { color: var(--ink); background: var(--glass-fill-strong); }
 
 @media (max-width: 640px) { .links { display: none; } }
 </style>

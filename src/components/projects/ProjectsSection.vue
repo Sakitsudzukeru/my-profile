@@ -66,7 +66,7 @@ const activeIndex = ref(0)
           <p>{{ content.seeGalleryText }}</p>
         </a>
         <div v-else class="showcase-cols">
-          <CodeSample :code="project.code" :github-url="project.githubUrl ?? '#'" />
+          <CodeSample :code="project.code" :github-url="project.githubUrl" />
           <ProjectResult v-if="project.result" :result="project.result" />
         </div>
       </div>

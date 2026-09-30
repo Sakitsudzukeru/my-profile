@@ -111,6 +111,7 @@ export interface SiteContent {
   socialLinks: SocialLink[]
   logo: { base: string; accent: string }
   cvButtonLabel: string
+  cvShortButtonLabel: string
   hero: {
     eyebrow: string
     titleWhite: string
