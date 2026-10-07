@@ -91,5 +91,6 @@ const { content } = useContent()
   .hero { grid-template-columns: 1fr; }
   .hero-visual { margin-top: 3rem; }
   .sticker-1 { left: 4px; }
+  .sticker-3 { right: 4px; }
 }
 </style>

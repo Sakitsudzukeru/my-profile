@@ -157,7 +157,7 @@ async function createPdfBuilder() {
     return h
   }
 
-  function nameHeader(name: string, title: string, contacts: { label: string; url: string }[]) {
+  function nameHeader(name: string, title: string, location: string, contacts: { label: string; url: string }[]) {
     doc.setFont(FONT, 'bold')
     doc.setFontSize(20)
     doc.setTextColor(...INK)
@@ -169,17 +169,27 @@ async function createPdfBuilder() {
     doc.text(title, MARGIN, y)
     y += 17
     doc.setFontSize(9)
-    doc.setTextColor(...WINE)
-    let x = MARGIN
+    doc.setTextColor(...DIM)
+    doc.text(location, MARGIN, y)
+    y += 14
+
+    doc.setFontSize(9)
     const sep = '   ·   '
+    const sepWidth = doc.getTextWidth(sep)
+    let x = MARGIN
     contacts.forEach((c, i) => {
+      const labelWidth = doc.getTextWidth(c.label)
+      if (x > MARGIN && x + labelWidth > PAGE_WIDTH - MARGIN) {
+        y += 13
+        x = MARGIN
+      }
+      doc.setTextColor(...WINE)
       doc.textWithLink(c.label, x, y, { url: c.url })
-      x += doc.getTextWidth(c.label)
+      x += labelWidth
       if (i < contacts.length - 1) {
         doc.setTextColor(...DIM)
         doc.text(sep, x, y)
-        x += doc.getTextWidth(sep)
-        doc.setTextColor(...WINE)
+        x += sepWidth
       }
     })
     y += 18
@@ -198,15 +208,11 @@ async function createPdfBuilder() {
     y += 13
   }
 
-  function educationBlock(edu: { institution: string; degree: string; credential?: string; period: string; note?: string }) {
-    let h = 16 + countLines(edu.degree, CONTENT_WIDTH, 9.5) * 13
-    if (edu.credential) h += countLines(edu.credential, CONTENT_WIDTH, 9) * 13
-    if (edu.note) h += countLines(edu.note, CONTENT_WIDTH, 8.5) * 13
+  function educationBlock(edu: { institution: string; degree: string; period: string }) {
+    const h = 16 + countLines(edu.degree, CONTENT_WIDTH, 9.5) * 13
     ensureSpace(h)
     subheading(edu.institution, edu.period)
     paragraph(edu.degree, { size: 9.5 })
-    if (edu.credential) paragraph(edu.credential, { size: 9, color: DIM })
-    if (edu.note) paragraph(edu.note, { size: 8.5, color: DIM })
   }
 
   function labeledBullets(label: string, items: string[]) {
@@ -247,19 +253,17 @@ export async function downloadResumePdf(locale: Locale) {
   const resume = resumeByLocale[locale]
   const b = await createPdfBuilder()
 
-  b.nameHeader(resume.name, resume.title, resume.contacts)
+  b.nameHeader(resume.name, resume.title, resume.location, resume.contacts)
   b.paragraph(resume.summary)
 
   for (const group of resume.skillGroups) {
     b.ensureSpace(14)
     b.paragraph(`${group.label}: ${group.value}`, { size: 9.5 })
   }
-  b.paragraph(resume.openToRelocation, { size: 9, color: DIM })
 
   b.heading(resume.experienceHeading)
   b.subheading(resume.experience.company)
   b.roleLine(resume.experience.role, resume.experience.period)
-  b.paragraph(resume.experience.techStack, { size: 8.5, color: DIM })
 
   for (const proj of resume.experience.projects) {
     b.ensureSpace(b.projectBlockHeight(proj))
@@ -281,6 +285,9 @@ export async function downloadResumePdf(locale: Locale) {
     b.paragraph(proj.techStack, { size: 8.5, color: DIM })
   }
 
+  b.heading(resume.languagesHeading)
+  b.paragraph(resume.languagesLine, { size: 9.5 })
+
   const fileName = resume.name.replace(/\s+/g, '_')
   b.save(locale === 'ru' ? `${fileName}_резюме.pdf` : `${fileName}_CV.pdf`)
 }
@@ -290,29 +297,27 @@ export async function downloadShortResumePdf(locale: Locale) {
   const short = shortResumeByLocale[locale]
   const b = await createPdfBuilder()
 
-  b.nameHeader(full.name, full.title, full.contacts)
+  b.nameHeader(full.name, full.title, full.location, full.contacts)
   b.paragraph(short.summary)
 
   for (const group of full.skillGroups) {
     b.ensureSpace(14)
     b.paragraph(`${group.label}: ${group.value}`, { size: 9.5 })
   }
-  b.paragraph(full.openToRelocation, { size: 9, color: DIM })
 
   b.heading(full.experienceHeading)
   b.subheading(full.experience.company)
   b.roleLine(full.experience.role, full.experience.period)
 
   for (const proj of full.experience.projects) {
-    const bullets = proj.title === 'Corporate Systems Support' || proj.title === 'Поддержка корпоративных систем' ? short.supportBullets : proj.bullets
-    b.ensureSpace(b.projectBlockHeight({ ...proj, bullets }))
+    b.ensureSpace(b.projectBlockHeight(proj))
     b.subheading(proj.title)
     if (proj.summary) b.paragraph(proj.summary)
-    b.bullets(bullets)
+    b.bullets(proj.bullets)
   }
 
   b.heading(full.educationHeading)
-  for (const edu of full.education) b.educationBlock({ institution: edu.institution, degree: edu.degree, period: edu.period })
+  for (const edu of full.education) b.educationBlock(edu)
   b.labeledBullets(full.coursesLabel, short.courses)
 
   b.heading(full.personalProjectsHeading)
@@ -322,6 +327,9 @@ export async function downloadShortResumePdf(locale: Locale) {
     b.paragraph(proj.note, { size: 9, color: DIM })
   }
   b.paragraph(short.personalOther, { color: DIM })
+
+  b.heading(full.languagesHeading)
+  b.paragraph(full.languagesLine, { size: 9.5 })
 
   const fileName = full.name.replace(/\s+/g, '_')
   b.save(locale === 'ru' ? `${fileName}_резюме_кратко.pdf` : `${fileName}_CV_short.pdf`)

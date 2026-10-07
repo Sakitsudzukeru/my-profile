@@ -66,6 +66,7 @@ export const skillTilesByGroup = {
     "Jest",
     "Swagger",
   ],
+  design: ["Photoshop", "Krita", "Figma"],
 };
 
 export const footerEmail = "sadelenik.a@gmail.com";

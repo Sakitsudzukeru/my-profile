@@ -106,6 +106,7 @@ const ru: Dictionary = {
     mobile: "мобильная разработка",
     data: "данные и очереди",
     devops: "devops и инструменты",
+    design: "дизайн",
   },
   experienceSectionTitle: "опыт работы",
   timeline: [
@@ -166,6 +167,13 @@ const ru: Dictionary = {
             "Постоянная поддержка продакшн-систем, рефакторинг и миграция легаси, устранение критических багов и уязвимостей.",
           ],
         },
+        {
+          label: "Маркетинг и дизайн (учебный проект, магазин корейской косметики)",
+          bullets: [
+            "Разработала контент-стратегию для соцсетей магазина: контент-план, форматы и темы.",
+            "Создавала карточки товаров, инфографику и баннеры для уходовой косметики в Adobe Photoshop.",
+          ],
+        },
       ],
     },
   ],
@@ -185,11 +193,15 @@ const ru: Dictionary = {
     },
     {
       icon: "trending",
-      text: "сертификат маркетолога (проходила курсы)",
+      text: "маркетинг (практические курсы): воронка продаж, анализ ЦА, контент-стратегия",
     },
     {
       icon: "bot",
       text: "использую Claude Code для рутинных задач",
+    },
+    {
+      icon: "globe",
+      text: "языки: русский — родной, английский — B2 (совершенствую), сербский — изучаю",
     },
   ],
   personalFacts: [
@@ -221,15 +233,15 @@ const ru: Dictionary = {
   educationSectionTitle: "образование",
   education: [
     {
-      institution: "Volodymyr Dahl National University",
+      institution: "Государственный университет им. В. Даля",
       degree: "Бакалавр, программная инженерия",
       credential: "Бакалавриат",
       period: "сент. 2022 — июнь 2024",
       note: "Заочная форма обучения — занятия по выходным",
     },
     {
-      institution: "V. Dahl State University College",
-      degree: "Младший специалист, программирование в компьютерных системах",
+      institution: "Колледж Государственного университета им. В. Даля",
+      degree: "Техник-программист, программирование в компьютерных системах",
       credential: "Диплом о среднем профессиональном образовании с отличием",
       period: "сент. 2018 — июнь 2022",
       note: "Устроилась на работу на последнем курсе колледжа",
@@ -244,7 +256,7 @@ const ru: Dictionary = {
     headingBefore: "готова присоединиться",
     headingAfter: "к вашей ",
     headingHighlight: "команде",
-    location: "рассматриваю страны для переезда",
+    location: "Нови-Сад, Сербия (с декабря 2026)",
     stickyLine1: "буду рада",
     stickyLine2: "вашему сообщению",
   },
@@ -371,6 +383,7 @@ const en: Dictionary = {
     mobile: "mobile",
     data: "data & queues",
     devops: "devops & tools",
+    design: "design",
   },
   experienceSectionTitle: "experience",
   timeline: [
@@ -431,6 +444,13 @@ const en: Dictionary = {
             "Ongoing support, legacy refactoring/migration, critical bug and vulnerability fixes.",
           ],
         },
+        {
+          label: "Marketing & Design (course project, Korean cosmetics store)",
+          bullets: [
+            "Built a content strategy for the store's social media: content plan, formats and topics.",
+            "Designed product cards, infographics and banners for skincare products in Adobe Photoshop.",
+          ],
+        },
       ],
     },
   ],
@@ -450,11 +470,15 @@ const en: Dictionary = {
     },
     {
       icon: "trending",
-      text: "marketing certificate (completed a course)",
+      text: "marketing (practice-based courses): sales funnel, target audience analysis, content strategy",
     },
     {
       icon: "bot",
       text: "use Claude Code for routine tasks",
+    },
+    {
+      icon: "globe",
+      text: "languages: Russian — native, English — B2 (actively improving), Serbian — learning",
     },
   ],
   personalFacts: [
@@ -486,7 +510,7 @@ const en: Dictionary = {
   educationSectionTitle: "education",
   education: [
     {
-      institution: "Volodymyr Dahl National University",
+      institution: "V. Dahl State University",
       degree: "Bachelor, Software Engineering",
       credential: "Bachelor's degree",
       period: "Sep 2022 – Jun 2024",
@@ -494,7 +518,7 @@ const en: Dictionary = {
     },
     {
       institution: "V. Dahl State University College",
-      degree: "Mid-level specialist, Programming in computer systems",
+      degree: "Diploma in Programming, computer systems",
       credential: "Diploma of secondary vocational education, with honors",
       period: "Sep 2018 – Jun 2022",
       note: "Got a job during my last year of college",
@@ -509,7 +533,7 @@ const en: Dictionary = {
     headingBefore: "ready to join",
     headingAfter: "your ",
     headingHighlight: "team",
-    location: "open to relocating, exploring countries",
+    location: "Novi Sad, Serbia (from December 2026)",
     stickyLine1: "would love",
     stickyLine2: "to hear from you",
   },

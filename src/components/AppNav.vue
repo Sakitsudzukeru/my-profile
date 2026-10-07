@@ -53,11 +53,15 @@ onBeforeUnmount(() => observer?.disconnect())
       >{{ link.label }}</a>
     </div>
     <div class="nav-right">
-      <a v-for="social in content.socialLinks" :key="social.id" class="icon-btn" :href="social.href" :title="social.title">
-        <SocialIcon :id="social.id" />
-      </a>
-      <a class="cv-btn ghost" href="#" @click.prevent="downloadShortResumePdf(locale)">{{ content.cvShortButtonLabel }}</a>
-      <a class="cv-btn" href="#" @click.prevent="downloadResumePdf(locale)">{{ content.cvButtonLabel }}</a>
+      <div class="icon-group">
+        <a v-for="social in content.socialLinks" :key="social.id" class="icon-btn" :href="social.href" :title="social.title">
+          <SocialIcon :id="social.id" />
+        </a>
+      </div>
+      <div class="cv-group">
+        <a class="cv-btn ghost" href="#" @click.prevent="downloadShortResumePdf(locale)">{{ content.cvShortButtonLabel }}</a>
+        <a class="cv-btn" href="#" @click.prevent="downloadResumePdf(locale)">{{ content.cvButtonLabel }}</a>
+      </div>
     </div>
   </nav>
 </template>
@@ -85,20 +89,32 @@ nav {
   border-radius: 999px;
 }
 .nav-right { display: flex; align-items: center; gap: 0.6rem; }
+.icon-group, .cv-group { display: flex; align-items: center; gap: 0.6rem; }
 .icon-btn {
   width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center;
   border: 1px solid var(--glass-line); background: var(--glass-fill); color: var(--ink-soft); text-decoration: none;
+  flex-shrink: 0;
 }
 .icon-btn:hover { color: var(--ink); background: var(--glass-fill-strong); }
 .cv-btn {
   font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; font-weight: 700;
   background: linear-gradient(180deg, var(--rose-glow), var(--rose)); color: #fff5f6;
   padding: 0.5rem 0.9rem; border-radius: 8px; text-decoration: none; display: flex; align-items: center; gap: 0.35rem;
+  white-space: nowrap; flex-shrink: 0;
 }
 .cv-btn.ghost {
   background: var(--glass-fill); color: var(--ink-soft); border: 1px solid var(--glass-line);
 }
 .cv-btn.ghost:hover { color: var(--ink); background: var(--glass-fill-strong); }
 
-@media (max-width: 640px) { .links { display: none; } }
+@media (max-width: 640px) {
+  .links { display: none; }
+  nav { padding: 1.1rem 5vw; }
+  .nav-right { gap: 0.4rem; }
+  .icon-group { gap: 0.35rem; }
+  .cv-group { gap: 0.35rem; }
+  .icon-btn { width: 32px; height: 32px; border-radius: 8px; }
+  .icon-btn :deep(svg) { width: 15px; height: 15px; }
+  .cv-btn { font-size: 0.65rem; padding: 0.4rem 0.6rem; }
+}
 </style>

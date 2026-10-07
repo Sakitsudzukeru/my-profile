@@ -22,25 +22,23 @@ export interface PersonalProject {
 export interface ResumeEducationItem {
   institution: string
   degree: string
-  credential?: string
   period: string
-  note?: string
 }
 
 export interface ResumeContent {
   name: string
   title: string
+  location: string
   contacts: { label: string; url: string }[]
   experienceHeading: string
   personalProjectsHeading: string
+  languagesHeading: string
   summary: string
   skillGroups: SkillGroupLine[]
-  openToRelocation: string
   experience: {
     company: string
     role: string
     period: string
-    techStack: string
     projects: ExperienceProject[]
   }
   personalProjects: PersonalProject[]
@@ -48,11 +46,11 @@ export interface ResumeContent {
   education: ResumeEducationItem[]
   coursesLabel: string
   courses: string[]
+  languagesLine: string
 }
 
 export interface ShortResumeContent {
   summary: string
-  supportBullets: string[]
   personalHighlights: { title: string; note: string }[]
   personalOther: string
   courses: string[]
@@ -60,90 +58,80 @@ export interface ShortResumeContent {
 
 const en: ResumeContent = {
   name: 'Elena Duka',
-  title: 'Full Stack Developer',
+  title: 'Full-Stack Developer · TypeScript · Node.js · React',
+  location: 'Based in Novi Sad, Serbia (from December 2026)',
   contacts: [
     { label: 'sadelenik.a@gmail.com', url: 'mailto:sadelenik.a@gmail.com' },
     { label: 'github.com/Sakitsudzukeru', url: 'https://github.com/Sakitsudzukeru' },
     { label: 'linkedin.com/in/elena-duka-212b803bb', url: 'https://www.linkedin.com/in/elena-duka-212b803bb/' },
+    { label: 'sakitsudzukeru.github.io/my-profile', url: 'https://sakitsudzukeru.github.io/my-profile/' },
   ],
   experienceHeading: 'EXPERIENCE',
   personalProjectsHeading: 'PERSONAL PROJECTS',
+  languagesHeading: 'LANGUAGES',
   summary:
-    "Hi, I'm Elena, 23. Fullstack developer with 4+ years of experience building scalable web applications. I specialize in high-load data processing, API optimization, and modular systems for business process automation; I'm hands-on with DevOps: I deploy and debug my own services in production. Designed a corporate platform from scratch and am currently building my own products alongside full-time work.",
+    'Full-stack developer with 4+ years of commercial experience building web platforms, APIs, and high-load data-processing services for a telecom company. Designed a 17-module corporate platform from scratch, built messaging and request-routing systems handling 1,000+ SMS and 200+ requests daily, and own services end-to-end — from database design to Docker/Nginx deployment and production support.',
   skillGroups: [
-    { label: 'Core stack', value: 'TypeScript · Node.js · NestJS · Express · Next.js · React · REST API · WebSockets' },
+    { label: 'Languages & Frameworks', value: 'TypeScript, JavaScript, Node.js, NestJS, Express, Next.js, React, Vue.js' },
+    { label: 'Databases', value: 'PostgreSQL, Oracle (PL/SQL), MongoDB, MariaDB, Redis · Prisma, TypeORM, Mongoose' },
+    { label: 'Messaging & Real-time', value: 'RabbitMQ, WebSockets, background jobs, event-driven architecture' },
+    { label: 'DevOps', value: 'Docker, Nginx, Linux (Ubuntu, Debian), CI/CD (GitHub Actions, GitLab CI), Bash, AWS S3' },
+    { label: 'Testing & Docs', value: 'Jest, Swagger/OpenAPI' },
     {
-      label: 'Data & ORM',
-      value: 'Oracle · PL/SQL · PostgreSQL · MariaDB · MongoDB · Redis · Prisma · TypeORM · Mongoose · multi-database systems',
+      label: 'Design',
+      value: 'Adobe Photoshop, Krita, Figma (basic) · product cards & infographics, banners, landing pages, illustrations, presentations',
     },
-    { label: 'Messaging & Queues', value: 'RabbitMQ · background job processing · event-based architecture' },
-    {
-      label: 'DevOps & Infrastructure',
-      value:
-        'Docker · Nginx (reverse proxy, production tuning) · Linux administration & setup (Ubuntu, Debian, Arch) · CI/CD (GitHub Actions, GitLab CI) · Bash scripting · AWS S3',
-    },
-    { label: 'Also worked with', value: 'Flutter/Dart · React Native · PHP/Laravel · C# · Vue.js · Python · Hapi.js · Strapi · Tailwind CSS' },
-    { label: 'Testing & Docs', value: 'Jest · Swagger/OpenAPI' },
+    { label: 'Marketing (practice-based courses)', value: 'sales funnel, target audience analysis, content strategy' },
+    { label: 'Also worked with', value: 'PHP/Laravel, C#, React Native, Flutter/Dart, Python' },
     { label: 'Tools & AI', value: 'Git · AI-assisted development (Claude Code) in personal projects' },
   ],
-  openToRelocation: 'Open to relocation.',
   experience: {
-    company: 'Mobile operator',
-    role: 'Software Engineer (1st category)',
+    company: 'Mobile operator (telecom), Russia',
+    role: 'Software Engineer',
     period: 'Apr 2022 – Present',
-    techStack:
-      'Tech stack: TypeScript, JavaScript, Node.js, NestJS, Next.js, React, Hapi.js · MongoDB, PostgreSQL · RabbitMQ, WebSockets · Nginx, Docker · PHP, Laravel, C#, Vue.js',
     projects: [
       {
         title: 'Corporate Management Platform',
-        summary: 'Corporate portal for data processing and customer request management, 17+ modules, scalable microservices architecture.',
         bullets: [
-          'Designed the full architecture from scratch (DB schema to UI/UX).',
-          'Two-way SMS module: outbound + inbound processing (1,000+/300+ daily).',
-          'Request processing: 200+/day with automatic routing and status tracking.',
-          'Auth across microservices; optimized queries across Oracle, PostgreSQL, MongoDB.',
-          'Complex SQL and PL/SQL blocks over large joined tables for search, batch updates, and reporting.',
-          'Awarded a company certificate for implementing portal modules.',
+          'Designed and built a corporate platform from scratch (17+ modules, microservices), covering DB schema, backend and UI/UX.',
+          'Built a two-way SMS module processing 1,000+ outbound and 300+ inbound messages daily.',
+          'Automated request routing and status tracking for 200+ customer requests per day.',
+          'Implemented authentication across microservices and optimized queries across Oracle, PostgreSQL and MongoDB.',
+          'Wrote complex SQL and PL/SQL for search, batch updates and reporting over large joined tables.',
+          'Received a company award for implementing key platform modules.',
         ],
       },
       {
         title: 'CDR Streaming Parser',
-        summary: 'High-load telecom parser replacing a manual workflow with an automated pipeline.',
         bullets: [
-          'Processes multi-million-row files via queue with low, stable memory.',
-          'Chunked reading to stream large files without full in-memory load.',
-          'Batched PostgreSQL inserts for high-throughput ingestion.',
+          'Replaced a manual workflow with an automated high-load pipeline processing multi-million-row telecom files.',
+          'Implemented chunked streaming and batched PostgreSQL inserts to keep memory usage low and stable.',
         ],
       },
       {
         title: 'Mass SMS Management System',
         bullets: [
-          'SPA with real-time campaign status via WebSockets.',
-          'Admin panel for campaign monitoring and control.',
-          'Multi-database sync with change detection (eventual consistency).',
+          'Built a SPA with real-time campaign status via WebSockets and an admin panel for monitoring and control.',
+          'Implemented multi-database sync with change detection (eventual consistency).',
         ],
       },
       {
-        title: 'Microservices for Data Processing',
+        title: 'Data Processing Microservices',
+        bullets: ['Developed queue-based microservices for JSON, TXT, DOCX and Excel processing, document template generators and integration APIs.'],
+      },
+      {
+        title: 'DevOps & Support',
         bullets: [
-          'Microservices for JSON, TXT, DOCX, Excel processing with task queues.',
-          'Document template generators and integration APIs.',
+          'Deployed and maintained production services in Docker with Nginx reverse proxy; debugged production issues (TIME_WAIT, OPcache).',
+          'Maintained and refactored legacy systems (PHP/Laravel, C#, Vue.js), fixed critical bugs and vulnerabilities, added Jest unit tests.',
         ],
       },
       {
-        title: 'DevOps & Infrastructure',
+        title: 'Marketing & Design (course project)',
+        summary: 'Korean cosmetics store',
         bullets: [
-          'Deployed and maintained apps in Docker (incl. production Docker/Nginx/Laravel).',
-          'Linux server administration and setup (CLI, service config, deployment).',
-          'Nginx reverse proxy; debugged production issues (TIME_WAIT, OPcache).',
-        ],
-      },
-      {
-        title: 'Corporate Systems Support',
-        bullets: [
-          'New features and legacy maintenance (PHP, Laravel, C#, Vue.js): business logic, debugging, production fixes.',
-          'Jest unit tests to prevent regressions.',
-          'Ongoing support, legacy refactoring/migration, critical bug and vulnerability fixes.',
+          "Built a content strategy for the store's social media: content plan, formats and topics.",
+          'Designed product cards, infographics and banners for skincare products in Adobe Photoshop.',
         ],
       },
     ],
@@ -188,11 +176,7 @@ const en: ResumeContent = {
     },
     {
       title: 'Telegram Bots',
-      bullets: [
-        'Built a dating bot with profile forms and matchmaking.',
-        'Built a job-search bot.',
-        'Implemented commands and user input handling.',
-      ],
+      bullets: ['Built a dating bot with profile forms and matchmaking.', 'Built a job-search bot.', 'Implemented commands and user input handling.'],
       techStack: 'Tech stack: Node.js, Telegram Bot API',
     },
     {
@@ -229,112 +213,90 @@ const en: ResumeContent = {
   ],
   educationHeading: 'EDUCATION',
   education: [
-    {
-      institution: 'Volodymyr Dahl National University',
-      degree: 'Bachelor, Software Engineering',
-      credential: "Bachelor's degree",
-      period: 'Sep 2022 – Jun 2024',
-      note: 'Correspondence program — classes on weekends',
-    },
-    {
-      institution: 'V. Dahl State University College',
-      degree: 'Mid-level specialist, Programming in computer systems',
-      credential: 'Diploma of secondary vocational education, with honors',
-      period: 'Sep 2018 – Jun 2022',
-      note: 'Got a job during my last year of college',
-    },
+    { institution: 'V. Dahl State University', degree: 'B.Sc., Software Engineering', period: '2024' },
+    { institution: 'V. Dahl State University College', degree: 'Diploma in Programming (with honors)', period: '2022' },
   ],
   coursesLabel: 'Courses & certificates',
   courses: ['Infrastructure Solutions for Programmers — C-19154, 2025', 'Comprehensive Internet Marketing — Redford School, 2023'],
+  languagesLine: 'Russian – native · English – B2 (actively improving) · Serbian – learning',
 }
 
 const ru: ResumeContent = {
   name: 'Елена Дука',
-  title: 'Full Stack Developer',
+  title: 'Full-Stack разработчик · TypeScript · Node.js · React',
+  location: 'Нови-Сад, Сербия (с декабря 2026)',
   contacts: [
     { label: 'sadelenik.a@gmail.com', url: 'mailto:sadelenik.a@gmail.com' },
     { label: 'github.com/Sakitsudzukeru', url: 'https://github.com/Sakitsudzukeru' },
     { label: 'linkedin.com/in/elena-duka-212b803bb', url: 'https://www.linkedin.com/in/elena-duka-212b803bb/' },
+    { label: 'sakitsudzukeru.github.io/my-profile', url: 'https://sakitsudzukeru.github.io/my-profile/' },
   ],
   experienceHeading: 'ОПЫТ РАБОТЫ',
   personalProjectsHeading: 'ЛИЧНЫЕ ПРОЕКТЫ',
+  languagesHeading: 'ЯЗЫКИ',
   summary:
-    'Привет, меня зовут Елена, мне 23 года. Fullstack-разработчик с 4+ годами опыта создания масштабируемых веб-приложений. Специализируюсь на обработке высоконагруженных данных, оптимизации API и модульных системах для автоматизации бизнес-процессов; плотно работаю с DevOps: самостоятельно деплою и отлаживаю свои сервисы в проде. Спроектировала корпоративную платформу с нуля и сейчас параллельно с основной работой развиваю собственные продукты.',
+    'Fullstack-разработчик с 4+ годами коммерческого опыта создания веб-платформ, API и высоконагруженных сервисов обработки данных для телеком-компании. Спроектировала с нуля корпоративную платформу из 17+ модулей, разработала системы обмена сообщениями и маршрутизации заявок на 1000+ SMS и 200+ заявок в день, веду свои сервисы полностью — от схемы БД до деплоя в Docker/Nginx и поддержки в проде.',
   skillGroups: [
-    { label: 'Основной стек', value: 'TypeScript · Node.js · NestJS · Express · Next.js · React · REST API · WebSockets' },
+    { label: 'Языки и фреймворки', value: 'TypeScript, JavaScript, Node.js, NestJS, Express, Next.js, React, Vue.js' },
+    { label: 'Базы данных', value: 'PostgreSQL, Oracle (PL/SQL), MongoDB, MariaDB, Redis · Prisma, TypeORM, Mongoose' },
+    { label: 'Обмен сообщениями и real-time', value: 'RabbitMQ, WebSockets, фоновые задачи, событийная архитектура' },
+    { label: 'DevOps', value: 'Docker, Nginx, Linux (Ubuntu, Debian), CI/CD (GitHub Actions, GitLab CI), Bash, AWS S3' },
+    { label: 'Тестирование и документация', value: 'Jest, Swagger/OpenAPI' },
     {
-      label: 'Данные и ORM',
-      value: 'Oracle · PL/SQL · PostgreSQL · MariaDB · MongoDB · Redis · Prisma · TypeORM · Mongoose · работа с несколькими БД одновременно',
+      label: 'Дизайн',
+      value: 'Adobe Photoshop, Krita, Figma (базово) · карточки товаров и инфографика, баннеры, лендинги, иллюстрации, презентации',
     },
-    { label: 'Очереди и обмен сообщениями', value: 'RabbitMQ · фоновая обработка задач · событийная архитектура' },
-    {
-      label: 'DevOps и инфраструктура',
-      value:
-        'Docker · Nginx (reverse proxy, production-тюнинг) · администрирование и настройка Linux (Ubuntu, Debian, Arch) · CI/CD (GitHub Actions, GitLab CI) · Bash-скрипты · AWS S3',
-    },
-    { label: 'Также работала с', value: 'Flutter/Dart · React Native · PHP/Laravel · C# · Vue.js · Python · Hapi.js · Strapi · Tailwind CSS' },
-    { label: 'Тестирование и документация', value: 'Jest · Swagger/OpenAPI' },
+    { label: 'Маркетинг (практические курсы)', value: 'воронка продаж, анализ ЦА, контент-стратегия' },
+    { label: 'Также работала с', value: 'PHP/Laravel, C#, React Native, Flutter/Dart, Python' },
     { label: 'Инструменты и AI', value: 'Git · разработка с AI-ассистентом (Claude Code) в личных проектах' },
   ],
-  openToRelocation: 'Открыта к релокации.',
   experience: {
-    company: 'Мобильный оператор',
-    role: 'Software Engineer (1 категория)',
+    company: 'Мобильный оператор (телеком), Россия',
+    role: 'Инженер-программист',
     period: '04.2022 — наст. время',
-    techStack:
-      'Стек: TypeScript, JavaScript, Node.js, NestJS, Next.js, React, Hapi.js · MongoDB, PostgreSQL · RabbitMQ, WebSockets · Nginx, Docker · PHP, Laravel, C#, Vue.js',
     projects: [
       {
         title: 'Корпоративная платформа управления',
-        summary:
-          'Корпоративный портал для обработки данных и управления клиентскими запросами, 17+ модулей, масштабируемая микросервисная архитектура.',
         bullets: [
-          'Спроектировала полную архитектуру с нуля (от схемы БД до UI/UX).',
-          'Модуль двусторонних SMS: исходящие уведомления + обработка входящих (1000+/300+ в день).',
-          'Система обработки заявок: 200+/день с автоматической маршрутизацией и отслеживанием статусов.',
-          'Авторизация между микросервисами; оптимизация запросов по Oracle, PostgreSQL, MongoDB.',
-          'Сложные SQL и PL/SQL блоки над большими связанными (joined) таблицами для поиска, пакетных обновлений, отчётности.',
-          'Награждёна сертификатом компании за реализацию модулей портала.',
+          'Спроектировала и разработала с нуля корпоративную платформу (17+ модулей, микросервисы): от схемы БД до бэкенда и UI/UX.',
+          'Разработала модуль двусторонних SMS: 1 000+ исходящих и 300+ входящих сообщений в день.',
+          'Автоматизировала маршрутизацию и отслеживание статусов для 200+ заявок клиентов в день.',
+          'Реализовала авторизацию между микросервисами, оптимизировала запросы к Oracle, PostgreSQL и MongoDB.',
+          'Писала сложные SQL-запросы и PL/SQL-блоки для поиска, пакетных обновлений и отчётов по большим связанным таблицам.',
+          'Награждена грамотой компании за внедрение ключевых модулей платформы.',
         ],
       },
       {
-        title: 'CDR Streaming Parser',
-        summary: 'Высоконагруженный парсер для телеком-данных, заменивший ручной процесс обработки.',
+        title: 'Потоковый парсер CDR',
         bullets: [
-          'Обрабатывает файлы с миллионами строк через очередь при низком и стабильном потреблении памяти.',
-          'Потоковое (chunked) чтение для обработки больших файлов (2+ млн записей) без полной загрузки в память.',
-          'Пакетные (batched) вставки в PostgreSQL для высокой пропускной способности загрузки данных.',
+          'Заменила ручной процесс автоматизированным высоконагруженным пайплайном обработки телеком-файлов на миллионы строк.',
+          'Реализовала потоковое чтение чанками и пакетные вставки в PostgreSQL для низкого и стабильного потребления памяти.',
         ],
       },
       {
-        title: 'Система массовых SMS-рассылок',
+        title: 'Система управления массовыми SMS-рассылками',
         bullets: [
-          'SPA с отслеживанием статуса кампаний в реальном времени через WebSockets.',
-          'Админ-панель для мониторинга и управления кампаниями.',
-          'Модуль синхронизации между базами данных с детекцией изменений (eventual consistency).',
+          'Разработала SPA со статусом рассылок в реальном времени через WebSockets и админ-панель для мониторинга и управления.',
+          'Реализовала синхронизацию нескольких БД с отслеживанием изменений (eventual consistency).',
         ],
       },
       {
         title: 'Микросервисы обработки данных',
+        bullets: ['Разработала микросервисы на очередях для обработки JSON, TXT, DOCX и Excel, генераторы документов по шаблонам и интеграционные API.'],
+      },
+      {
+        title: 'DevOps и поддержка',
         bullets: [
-          'Микросервисы для обработки JSON, TXT, DOCX, Excel с очередями задач под большие объёмы.',
-          'Генераторы шаблонов документов и интеграционные API.',
+          'Разворачивала и поддерживала продакшен-сервисы в Docker с Nginx (reverse proxy); отлаживала проблемы в продакшене (TIME_WAIT, OPcache).',
+          'Поддерживала и рефакторила legacy-системы (PHP/Laravel, C#, Vue.js), исправляла критические баги и уязвимости, покрывала код unit-тестами на Jest.',
         ],
       },
       {
-        title: 'DevOps и инфраструктура',
+        title: 'Маркетинг и дизайн (учебный проект)',
+        summary: 'Магазин корейской косметики',
         bullets: [
-          'Деплой и поддержка приложений в Docker (продакшн Docker/Nginx/Laravel).',
-          'Администрирование Linux-серверов (CLI, настройка сервисов, деплой).',
-          'Nginx как reverse proxy; дебаг продакшн-инцидентов (TIME_WAIT, OPcache).',
-        ],
-      },
-      {
-        title: 'Поддержка корпоративных систем',
-        bullets: [
-          'Новый функционал + поддержка легаси-кода (PHP, Laravel, C#, Vue.js): бизнес-логика, дебаг, продакшн-фиксы.',
-          'Jest-тесты для предотвращения регрессий.',
-          'Постоянная поддержка продакшн-систем, рефакторинг и миграция легаси, устранение критических багов и уязвимостей.',
+          'Разработала контент-стратегию для соцсетей магазина: контент-план, форматы и темы.',
+          'Создавала карточки товаров, инфографику и баннеры для уходовой косметики в Adobe Photoshop.',
         ],
       },
     ],
@@ -420,33 +382,18 @@ const ru: ResumeContent = {
   ],
   educationHeading: 'ОБРАЗОВАНИЕ',
   education: [
-    {
-      institution: 'Volodymyr Dahl National University',
-      degree: 'Бакалавр, программная инженерия',
-      credential: 'Бакалавриат',
-      period: 'сент. 2022 — июнь 2024',
-      note: 'Заочная форма обучения — занятия по выходным',
-    },
-    {
-      institution: 'V. Dahl State University College',
-      degree: 'Младший специалист, программирование в компьютерных системах',
-      credential: 'Диплом о среднем профессиональном образовании с отличием',
-      period: 'сент. 2018 — июнь 2022',
-      note: 'Устроилась на работу на последнем курсе колледжа',
-    },
+    { institution: 'Государственный университет им. В. Даля', degree: 'Бакалавр, программная инженерия', period: '2024' },
+    { institution: 'Колледж Государственного университета им. В. Даля', degree: 'Техник-программист (диплом с отличием)', period: '2022' },
   ],
   coursesLabel: 'Курсы и сертификаты',
   courses: ['Infrastructure Solutions for Programmers — C-19154, 2025', 'Комплексный интернет-маркетинг — Redford School, 2023'],
+  languagesLine: 'Русский – родной · Английский – B2 (совершенствую) · Сербский – изучаю',
 }
 
 export const resumeByLocale: Record<Locale, ResumeContent> = { ru, en }
 
 const shortEn: ShortResumeContent = {
   summary: en.summary,
-  supportBullets: [
-    'Feature development and legacy maintenance (PHP/Laravel, C#, Vue.js), refactoring and migration.',
-    'Production bug and vulnerability fixes; Jest unit tests to prevent regressions.',
-  ],
   personalHighlights: [
     {
       title: 'LangLib — language learning platform',
@@ -468,10 +415,6 @@ const shortEn: ShortResumeContent = {
 
 const shortRu: ShortResumeContent = {
   summary: ru.summary,
-  supportBullets: [
-    'Разработка нового функционала и поддержка легаси (PHP/Laravel, C#, Vue.js), рефакторинг и миграция.',
-    'Исправление продакшн-багов и уязвимостей; Jest-тесты для предотвращения регрессий.',
-  ],
   personalHighlights: [
     {
       title: 'LangLib — языковая платформа',

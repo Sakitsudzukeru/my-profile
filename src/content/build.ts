@@ -134,6 +134,7 @@ export function buildContent(locale: Locale): SiteContent {
       { label: dict.skillGroupLabels.mobile, tiles: shared.skillTilesByGroup.mobile },
       { label: dict.skillGroupLabels.data, tiles: shared.skillTilesByGroup.data },
       { label: dict.skillGroupLabels.devops, tiles: shared.skillTilesByGroup.devops },
+      { label: dict.skillGroupLabels.design, tiles: shared.skillTilesByGroup.design },
     ],
     experienceSectionTitle: dict.experienceSectionTitle,
     timeline: dict.timeline,

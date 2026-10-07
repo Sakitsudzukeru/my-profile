@@ -90,6 +90,7 @@ export type FactIconName =
   | 'plane'
   | 'car'
   | 'sparkle'
+  | 'globe'
 
 export interface AboutFact {
   icon: FactIconName
@@ -192,7 +193,7 @@ export interface Dictionary {
     whackAMole: { tabLabel: string; status: string; title: string; description: string }
   }
   skillsSectionTitle: string
-  skillGroupLabels: { backend: string; frontend: string; mobile: string; data: string; devops: string }
+  skillGroupLabels: { backend: string; frontend: string; mobile: string; data: string; devops: string; design: string }
   experienceSectionTitle: string
   timeline: TimelineItem[]
   aboutSectionTitle: string
