@@ -139,7 +139,11 @@ async function createPdfBuilder() {
       doc.text(lines, MARGIN + 16, y)
       y += 13 * lines.length
     }
-    y += 4
+    if (items.length) y += 4
+  }
+
+  function spacer(amount: number) {
+    y += amount
   }
 
   function countLines(text: string, width: number, size: number) {
@@ -149,7 +153,7 @@ async function createPdfBuilder() {
   }
 
   function projectBlockHeight(proj: { summary?: string; bullets: string[]; techStack?: string }) {
-    let h = 16
+    let h = 16 + 10
     if (proj.summary) h += countLines(proj.summary, CONTENT_WIDTH, 10) * 13
     for (const item of proj.bullets) h += countLines(item, CONTENT_WIDTH - 16, 9.5) * 13
     if (proj.bullets.length) h += 4
@@ -238,6 +242,7 @@ async function createPdfBuilder() {
     subheading,
     paragraph,
     bullets,
+    spacer,
     countLines,
     projectBlockHeight,
     ensureSpace,
@@ -254,8 +259,10 @@ export async function downloadResumePdf(locale: Locale) {
   const b = await createPdfBuilder()
 
   b.nameHeader(resume.name, resume.title, resume.location, resume.contacts)
+  b.heading(resume.summaryHeading)
   b.paragraph(resume.summary)
 
+  b.heading(resume.skillsHeading)
   for (const group of resume.skillGroups) {
     b.ensureSpace(14)
     b.paragraph(`${group.label}: ${group.value}`, { size: 9.5 })
@@ -283,6 +290,7 @@ export async function downloadResumePdf(locale: Locale) {
     if (proj.summary) b.paragraph(proj.summary)
     b.bullets(proj.bullets)
     b.paragraph(proj.techStack, { size: 8.5, color: DIM })
+    b.spacer(10)
   }
 
   b.heading(resume.languagesHeading)
@@ -298,8 +306,10 @@ export async function downloadShortResumePdf(locale: Locale) {
   const b = await createPdfBuilder()
 
   b.nameHeader(full.name, full.title, full.location, full.contacts)
+  b.heading(full.summaryHeading)
   b.paragraph(short.summary)
 
+  b.heading(full.skillsHeading)
   for (const group of full.skillGroups) {
     b.ensureSpace(14)
     b.paragraph(`${group.label}: ${group.value}`, { size: 9.5 })
@@ -322,11 +332,12 @@ export async function downloadShortResumePdf(locale: Locale) {
 
   b.heading(full.personalProjectsHeading)
   for (const proj of short.personalHighlights) {
-    b.ensureSpace(16 + b.countLines(proj.note, CONTENT_WIDTH, 9) * 13)
+    b.ensureSpace(26 + b.countLines(proj.note, CONTENT_WIDTH, 9) * 13)
     b.subheading(proj.title)
     b.paragraph(proj.note, { size: 9, color: DIM })
+    b.spacer(10)
   }
-  b.paragraph(short.personalOther, { color: DIM })
+  b.paragraph(short.personalOther, { size: 9, color: DIM })
 
   b.heading(full.languagesHeading)
   b.paragraph(full.languagesLine, { size: 9.5 })

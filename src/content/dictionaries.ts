@@ -249,8 +249,8 @@ const ru: Dictionary = {
   ],
   coursesLabel: "курсы и сертификаты",
   courses: [
-    "Infrastructure Solutions for Programmers — C-19154, 2025",
-    "Комплексный интернет-маркетинг — Redford School, 2023",
+    "Infrastructure Solutions for Programmers – Институт прикладной автоматизации и программирования, 2025",
+    "Комплексный интернет-маркетинг – Redford School, 2023",
   ],
   footer: {
     headingBefore: "готова присоединиться",
@@ -526,8 +526,8 @@ const en: Dictionary = {
   ],
   coursesLabel: "courses & certificates",
   courses: [
-    "Infrastructure Solutions for Programmers — C-19154, 2025",
-    "Comprehensive Internet Marketing — Redford School, 2023",
+    "Infrastructure Solutions for Programmers – Institute of Applied Automation and Programming, 2025",
+    "Comprehensive Internet Marketing – Redford School, 2023",
   ],
   footer: {
     headingBefore: "ready to join",

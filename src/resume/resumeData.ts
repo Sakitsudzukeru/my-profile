@@ -33,6 +33,8 @@ export interface ResumeContent {
   experienceHeading: string
   personalProjectsHeading: string
   languagesHeading: string
+  summaryHeading: string
+  skillsHeading: string
   summary: string
   skillGroups: SkillGroupLine[]
   experience: {
@@ -69,8 +71,10 @@ const en: ResumeContent = {
   experienceHeading: 'EXPERIENCE',
   personalProjectsHeading: 'PERSONAL PROJECTS',
   languagesHeading: 'LANGUAGES',
+  summaryHeading: 'SUMMARY',
+  skillsHeading: 'SKILLS',
   summary:
-    'Full-stack developer with 4+ years of commercial experience building web platforms, APIs, and high-load data-processing services for a telecom company. Designed a 17-module corporate platform from scratch, built messaging and request-routing systems handling 1,000+ SMS and 200+ requests daily, and own services end-to-end — from database design to Docker/Nginx deployment and production support.',
+    'Full-stack developer with 4+ years of commercial experience building web platforms, APIs, and high-load data-processing services for a telecom company. Designed a 17-module corporate platform from scratch, built messaging and request-routing systems handling 1,000+ SMS and 200+ requests daily, and own services end-to-end – from database design to Docker/Nginx deployment and production support.',
   skillGroups: [
     { label: 'Languages & Frameworks', value: 'TypeScript, JavaScript, Node.js, NestJS, Express, Next.js, React, Vue.js' },
     { label: 'Databases', value: 'PostgreSQL, Oracle (PL/SQL), MongoDB, MariaDB, Redis · Prisma, TypeORM, Mongoose' },
@@ -83,7 +87,7 @@ const en: ResumeContent = {
     },
     { label: 'Marketing (practice-based courses)', value: 'sales funnel, target audience analysis, content strategy' },
     { label: 'Also worked with', value: 'PHP/Laravel, C#, React Native, Flutter/Dart, Python' },
-    { label: 'Tools & AI', value: 'Git · AI-assisted development (Claude Code) in personal projects' },
+    { label: 'Tools & AI', value: 'Git · agentic AI tooling (Claude Code) for workflow automation and accelerated prototyping' },
   ],
   experience: {
     company: 'Mobile operator (telecom), Russia',
@@ -138,8 +142,8 @@ const en: ResumeContent = {
   },
   personalProjects: [
     {
-      title: 'Language Learning Application',
-      summary: 'a toolkit for learning foreign languages',
+      title: 'LangLib – Language Learning Application',
+      summary: 'A toolkit for learning foreign languages',
       bullets: [
         'Designed the full architecture from scratch: database, API, UI.',
         'Redis for payment idempotency, cron flag management, and leaderboard infrastructure (sorted sets).',
@@ -150,7 +154,7 @@ const en: ResumeContent = {
     },
     {
       title: 'Visual Novel',
-      summary: 'game project',
+      summary: 'Game project',
       bullets: [
         'Deployed Qwen2.5-7B-Instruct locally via llama-server.',
         "The backend service calls llama-server's API to generate character dialogue and lines, giving each character its own personality and speech style without relying on external LLM APIs.",
@@ -159,7 +163,7 @@ const en: ResumeContent = {
     },
     {
       title: 'Language Quiz Flashcards',
-      summary: 'small pet project, local offline card storage',
+      summary: 'Small pet project, local offline card storage',
       bullets: [],
       techStack: 'Tech stack: React Native, SQLite, Android build via Android Studio',
     },
@@ -168,7 +172,7 @@ const en: ResumeContent = {
       bullets: [
         'Flutter client with a photo editor and content recommendation feed; NestJS backend.',
         'Python microservice for image processing.',
-        'Python content-moderation microservice (detects NSFW/explicit content on upload).',
+        'Python content-moderation microservice (detects explicit content on upload).',
         'Node.js background worker for asynchronous processing.',
         'AWS S3 for cloud image storage.',
       ],
@@ -197,7 +201,7 @@ const en: ResumeContent = {
         'Built chat functionality and task assignment.',
         'Integrated a database for storing message and task history.',
       ],
-      techStack: 'Tech stack: Nest.js, React.js, Redux, PostgreSQL',
+      techStack: 'Tech stack: NestJS, React, Redux, PostgreSQL',
     },
     {
       title: 'Jewelry Online Store',
@@ -208,7 +212,7 @@ const en: ResumeContent = {
         'Built a cart and checkout system.',
         'Integrated a database for managing products and orders.',
       ],
-      techStack: 'Tech stack: React.js, SQLite',
+      techStack: 'Tech stack: React, SQLite',
     },
   ],
   educationHeading: 'EDUCATION',
@@ -217,7 +221,10 @@ const en: ResumeContent = {
     { institution: 'V. Dahl State University College', degree: 'Diploma in Programming (with honors)', period: '2022' },
   ],
   coursesLabel: 'Courses & certificates',
-  courses: ['Infrastructure Solutions for Programmers — C-19154, 2025', 'Comprehensive Internet Marketing — Redford School, 2023'],
+  courses: [
+    'Infrastructure Solutions for Programmers – Institute of Applied Automation and Programming, 2025',
+    'Comprehensive Internet Marketing – Redford School, 2023',
+  ],
   languagesLine: 'Russian – native · English – B2 (actively improving) · Serbian – learning',
 }
 
@@ -234,8 +241,10 @@ const ru: ResumeContent = {
   experienceHeading: 'ОПЫТ РАБОТЫ',
   personalProjectsHeading: 'ЛИЧНЫЕ ПРОЕКТЫ',
   languagesHeading: 'ЯЗЫКИ',
+  summaryHeading: 'О СЕБЕ',
+  skillsHeading: 'НАВЫКИ',
   summary:
-    'Fullstack-разработчик с 4+ годами коммерческого опыта создания веб-платформ, API и высоконагруженных сервисов обработки данных для телеком-компании. Спроектировала с нуля корпоративную платформу из 17+ модулей, разработала системы обмена сообщениями и маршрутизации заявок на 1000+ SMS и 200+ заявок в день, веду свои сервисы полностью — от схемы БД до деплоя в Docker/Nginx и поддержки в проде.',
+    'Fullstack-разработчик с 4+ годами коммерческого опыта создания веб-платформ, API и высоконагруженных сервисов обработки данных для телеком-компании. Спроектировала с нуля корпоративную платформу из 17+ модулей, разработала системы обмена сообщениями и маршрутизации заявок на 1000+ SMS и 200+ заявок в день, веду свои сервисы полностью – от схемы БД до деплоя в Docker/Nginx и поддержки в проде.',
   skillGroups: [
     { label: 'Языки и фреймворки', value: 'TypeScript, JavaScript, Node.js, NestJS, Express, Next.js, React, Vue.js' },
     { label: 'Базы данных', value: 'PostgreSQL, Oracle (PL/SQL), MongoDB, MariaDB, Redis · Prisma, TypeORM, Mongoose' },
@@ -248,12 +257,12 @@ const ru: ResumeContent = {
     },
     { label: 'Маркетинг (практические курсы)', value: 'воронка продаж, анализ ЦА, контент-стратегия' },
     { label: 'Также работала с', value: 'PHP/Laravel, C#, React Native, Flutter/Dart, Python' },
-    { label: 'Инструменты и AI', value: 'Git · разработка с AI-ассистентом (Claude Code) в личных проектах' },
+    { label: 'Инструменты и AI', value: 'Git · агентные AI-инструменты (Claude Code) для автоматизации процессов и ускорения разработки' },
   ],
   experience: {
     company: 'Мобильный оператор (телеком), Россия',
     role: 'Инженер-программист',
-    period: '04.2022 — наст. время',
+    period: '04.2022 – наст. время',
     projects: [
       {
         title: 'Корпоративная платформа управления',
@@ -303,8 +312,8 @@ const ru: ResumeContent = {
   },
   personalProjects: [
     {
-      title: 'Language Learning Application',
-      summary: 'инструмент для изучения иностранных языков',
+      title: 'LangLib – приложение для изучения языков',
+      summary: 'Инструмент для изучения иностранных языков',
       bullets: [
         'Спроектировала полную архитектуру с нуля: база данных, API, UI.',
         'Redis для идемпотентности платежей, управления cron-флагами и инфраструктурой лидерборда (sorted sets).',
@@ -315,7 +324,7 @@ const ru: ResumeContent = {
     },
     {
       title: 'Визуальная новелла',
-      summary: 'игровой проект',
+      summary: 'Игровой проект',
       bullets: [
         'Развернула локально Qwen2.5-7B-Instruct через llama-server.',
         'Бэкенд-сервис приложения обращается к llama-server по API для генерации диалогов и реплик персонажей, что даёт каждому персонажу собственную индивидуальность и стиль речи без обращения к внешним LLM API.',
@@ -324,7 +333,7 @@ const ru: ResumeContent = {
     },
     {
       title: 'Квиз-карточки для изучения языка',
-      summary: 'мини пет-проект, локальное офлайн-хранение карточек',
+      summary: 'Мини пет-проект, локальное офлайн-хранение карточек',
       bullets: [],
       techStack: 'Стек: React Native, SQLite, Android-сборка через Android Studio',
     },
@@ -333,7 +342,7 @@ const ru: ResumeContent = {
       bullets: [
         'Flutter-клиент с фоторедактором и лентой рекомендаций контента; бэкенд на NestJS.',
         'Python-микросервис обработки изображений.',
-        'Python-микросервис контент-модерации (детект NSFW/эксплицитного контента при загрузке).',
+        'Python-микросервис контент-модерации (детект эксплицитного контента при загрузке).',
         'Фоновый воркер на Node.js для асинхронной обработки.',
         'AWS S3 для облачного хранения изображений.',
       ],
@@ -366,7 +375,7 @@ const ru: ResumeContent = {
         'Создание функционала чатов и назначения задач.',
         'Интеграция с базой данных для хранения истории сообщений и задач.',
       ],
-      techStack: 'Стек: Nest.js, React.js, Redux, PostgreSQL',
+      techStack: 'Стек: NestJS, React, Redux, PostgreSQL',
     },
     {
       title: 'Интернет-магазин ювелирных украшений',
@@ -377,7 +386,7 @@ const ru: ResumeContent = {
         'Создание корзины и системы оформления заказов.',
         'Интеграция с базой данных для управления товарами и заказами.',
       ],
-      techStack: 'Стек: React.js, SQLite',
+      techStack: 'Стек: React, SQLite',
     },
   ],
   educationHeading: 'ОБРАЗОВАНИЕ',
@@ -386,7 +395,10 @@ const ru: ResumeContent = {
     { institution: 'Колледж Государственного университета им. В. Даля', degree: 'Техник-программист (диплом с отличием)', period: '2022' },
   ],
   coursesLabel: 'Курсы и сертификаты',
-  courses: ['Infrastructure Solutions for Programmers — C-19154, 2025', 'Комплексный интернет-маркетинг — Redford School, 2023'],
+  courses: [
+    'Infrastructure Solutions for Programmers – Институт прикладной автоматизации и программирования, 2025',
+    'Комплексный интернет-маркетинг – Redford School, 2023',
+  ],
   languagesLine: 'Русский – родной · Английский – B2 (совершенствую) · Сербский – изучаю',
 }
 
@@ -396,8 +408,8 @@ const shortEn: ShortResumeContent = {
   summary: en.summary,
   personalHighlights: [
     {
-      title: 'LangLib — language learning platform',
-      note: 'Full-stack platform for learning languages: payments, idempotency, word-analog search. Next.js, NestJS, MongoDB, Redis, RabbitMQ.',
+      title: 'LangLib – language learning platform',
+      note: 'Full-stack platform for learning languages: payments, idempotency, similar-word search. Next.js, NestJS, MongoDB, Redis, RabbitMQ.',
     },
     {
       title: 'Visual Novel',
@@ -405,20 +417,20 @@ const shortEn: ShortResumeContent = {
     },
     {
       title: 'Mobile Photo Application',
-      note: 'Flutter client with a photo editor, NestJS backend, Python services for image processing and NSFW moderation.',
+      note: 'Flutter client with a photo editor, NestJS backend, Python services for image processing and content moderation.',
     },
   ],
   personalOther:
-    'Also built language-quiz flashcards (React Native), Telegram bots (dating, job search), a VK game chat bot, and two thesis projects — a corporate messenger and a jewelry online store.',
-  courses: ['Infrastructure Solutions for Programmers — C-19154, 2025'],
+    'Also built language-quiz flashcards (React Native), Telegram bots (dating, job search), a VK game chat bot, and two thesis projects – a corporate messenger and a jewelry online store.',
+  courses: ['Infrastructure Solutions for Programmers – Institute of Applied Automation and Programming, 2025'],
 }
 
 const shortRu: ShortResumeContent = {
   summary: ru.summary,
   personalHighlights: [
     {
-      title: 'LangLib — языковая платформа',
-      note: 'Full-stack платформа для изучения языков: платежи, идемпотентность, поиск аналогов слов. Next.js, NestJS, MongoDB, Redis, RabbitMQ.',
+      title: 'LangLib – языковая платформа',
+      note: 'Full-stack платформа для изучения языков: платежи, идемпотентность, поиск похожих слов. Next.js, NestJS, MongoDB, Redis, RabbitMQ.',
     },
     {
       title: 'Визуальная новелла',
@@ -426,12 +438,12 @@ const shortRu: ShortResumeContent = {
     },
     {
       title: 'Мобильное приложение для работы с картинками',
-      note: 'Flutter-клиент с фоторедактором, NestJS backend, Python-сервисы обработки изображений и NSFW-модерации.',
+      note: 'Flutter-клиент с фоторедактором, NestJS backend, Python-сервисы обработки изображений и контент-модерации.',
     },
   ],
   personalOther:
-    'Также делала квиз-карточки для изучения языка (React Native), Telegram-ботов (знакомства, поиск работы), игрового чат-бота для ВКонтакте и два дипломных проекта — корпоративный мессенджер и интернет-магазин украшений.',
-  courses: ['Infrastructure Solutions for Programmers — C-19154, 2025'],
+    'Также делала квиз-карточки для изучения языка (React Native), Telegram-ботов (знакомства, поиск работы), игрового чат-бота для ВКонтакте и два дипломных проекта – корпоративный мессенджер и интернет-магазин украшений.',
+  courses: ['Infrastructure Solutions for Programmers – Институт прикладной автоматизации и программирования, 2025'],
 }
 
 export const shortResumeByLocale: Record<Locale, ShortResumeContent> = { ru: shortRu, en: shortEn }
