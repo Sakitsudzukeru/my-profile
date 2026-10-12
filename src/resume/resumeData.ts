@@ -108,8 +108,9 @@ const en: ResumeContent = {
       {
         title: 'CDR Streaming Parser',
         bullets: [
-          'Replaced a manual workflow with an automated high-load pipeline processing multi-million-row telecom files.',
-          'Implemented chunked streaming and batched PostgreSQL inserts to keep memory usage low and stable.',
+          'Processes multi-million-row files one at a time with low, stable memory.',
+          'Chunked reading to stream large files without full in-memory load.',
+          'Batched PostgreSQL inserts sized to stay within the query parameter limit.',
         ],
       },
       {
@@ -278,8 +279,9 @@ const ru: ResumeContent = {
       {
         title: 'Потоковый парсер CDR',
         bullets: [
-          'Заменила ручной процесс автоматизированным высоконагруженным пайплайном обработки телеком-файлов на миллионы строк.',
-          'Реализовала потоковое чтение чанками и пакетные вставки в PostgreSQL для низкого и стабильного потребления памяти.',
+          'Обрабатывает файлы с миллионами строк по одному при низком и стабильном потреблении памяти.',
+          'Потоковое (chunked) чтение для обработки больших файлов без полной загрузки в память.',
+          'Пакетные (batched) вставки в PostgreSQL с размером батча в пределах лимита параметров запроса.',
         ],
       },
       {

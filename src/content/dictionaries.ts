@@ -131,9 +131,9 @@ const ru: Dictionary = {
         {
           label: "CDR Streaming Parser",
           bullets: [
-            "Обрабатывает файлы с миллионами строк через очередь при низком и стабильном потреблении памяти.",
-            "Потоковое (chunked) чтение для обработки больших файлов (2+ млн записей) без полной загрузки в память.",
-            "Пакетные (batched) вставки в PostgreSQL для высокой пропускной способности загрузки данных.",
+            "Обрабатывает файлы с миллионами строк по одному при низком и стабильном потреблении памяти.",
+            "Потоковое (chunked) чтение для обработки больших файлов без полной загрузки в память.",
+            "Пакетные (batched) вставки в PostgreSQL с размером батча в пределах лимита параметров запроса.",
           ],
         },
         {
@@ -408,9 +408,9 @@ const en: Dictionary = {
         {
           label: "CDR Streaming Parser",
           bullets: [
-            "Processes multi-million-row files via queue with low, stable memory.",
+            "Processes multi-million-row files one at a time with low, stable memory.",
             "Chunked reading to stream large files without full in-memory load.",
-            "Batched PostgreSQL inserts for high-throughput ingestion.",
+            "Batched PostgreSQL inserts sized to stay within the query parameter limit.",
           ],
         },
         {
